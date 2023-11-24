@@ -1,0 +1,6 @@
+numpy==1.26.2
+Pillow==10.1.0
+pydantic==2.5.2
+pyserial==3.5
+starlette==0.32.0.post1
+tensorflow==2.15.0

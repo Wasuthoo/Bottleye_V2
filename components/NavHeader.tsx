@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '@/app/api'
 import BouncingDotsLoader from './BouncingDotsLoader';
 import { useRouter } from 'next/navigation';
 
@@ -8,22 +8,19 @@ const Navheader = () => {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-
-
-
   useEffect(() => {
     // Make an Axios request to fetch the bottle number
     async function fetchData() {
-      axios.get('http://18.209.16.118/get_count')
-      .then(response => {
-        // Assuming your API response contains the bottle number
-        setBottleNumber(response.data);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setIsLoading(false);
-      });
+      api.get('/get_count')
+        .then(response => {
+          // Assuming your API response contains the bottle number
+          setBottleNumber(response.data);
+          setIsLoading(false);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+          setIsLoading(false);
+        });
     }
     fetchData();
   }, []);
@@ -38,15 +35,15 @@ const Navheader = () => {
 
 
   return (
-    <div>
-      <img onClick={handleClickhome} src="/home-button-for-interface.png" className="absolute top-20 left-32 w-8 h-8 " />
+    <div className='flex items-center '>
+      <img className="w-8 h-8 m-8" onClick={handleClickhome} src="/home-button-for-interface.png"/>
 
-      <img src="/bottleye_logo.svg" className="w-48 h-48 m-auto text-center" />
-      <div className="absolute top-[50px] left-[1400px]">
-        <div onClick={handleClick} className="w-[124px] h-[68px] px-[18px] py-1 rounded-[45px] border-4 border-slate-700 justify-end items-center gap-2 inline-flex">
-          <img className="w-7 h-[50px]" src="/icon_bottle.svg" />
+      <img className="w-48 h-48 mx-auto text-center overflow-hidden relative" src="/bottleye_logo.svg"/>
+      
+      <div className=" top-[50px] left-[1400px]">
+        <div className="m-4 w-[124px] h-[68px] px-[18px] py-1 rounded-[45px] border-4 border-slate-700 justify-end items-center gap-2 inline-flex" onClick={handleClick}>
+          <img className="w-7 h-[40px]" src="/icon_bottle.svg" />
           {isLoading ? (
-            // <div className="w-16 h-16 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
             <BouncingDotsLoader />
           ) : (
             <div className="w-[52px] text-sky-100 text-[40px] font-medium font-Poppins">
